@@ -1,0 +1,59 @@
+.app-header {
+  border-bottom: var(--border-width) solid var(--color-text-main);
+  margin: 0 0 var(--gap-standard);
+  position: relative;
+}
+
+.app-header-title {
+  font-size: var(--font-size-h1);
+  margin: 0 auto;
+  max-width: var(--container-standard);
+  padding: var(--gap-small) var(--gap-standard);
+}
+
+.app-header-title .letter:first-of-type {
+  text-shadow: 0.15rem 0 0.1rem var(--color-accent-3);
+}
+
+.app-header-title .letter:nth-of-type(2) {
+  text-shadow: 0.15rem 0 0.1rem var(--color-accent-3);
+}
+
+.app-header-title .letter:last-of-type {
+  position: relative;
+  text-shadow: 0.4rem 0 0.1rem var(--color-accent-2);
+}
+
+.app-header-title .letter:last-of-type::after {
+  color: transparent;
+  content: "_";
+  position: absolute;
+  text-shadow: 0.05rem -0.3rem 0.1rem var(--color-accent-2);
+  top: 0;
+}
+
+.app-header::after {
+  bottom: -0.6rem;
+  content: "\\";
+  color: var(--color-accent-2);
+  font-size: var(--font-size-ml);
+  font-weight: var(--font-weight-bold);
+  position: absolute;
+  right: 5rem;
+  text-shadow:
+    0.75rem 0 0 var(--color-accent-2),
+    1.5rem 0 0 var(--color-accent-2),
+    2.25rem 0 0 var(--color-accent-2),
+    3rem 0 0 var(--color-accent-2);
+}
+
+.app-header::before {
+  border-bottom: var(--border-width-bold) solid var(--color-accent-1);
+  bottom: calc(var(--border-width-bold) * -1);
+  border-radius: 0 0 50%;
+  content: "";
+  left: 0;
+  position: absolute;
+  width: 50%;
+  z-index: 2;
+}

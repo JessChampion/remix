@@ -1,0 +1,18 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "color-hex-case": "upper",
+    "unit-disallowed-list": [
+      "px"
+    ],
+    "declaration-property-unit-disallowed-list": [
+      {
+        "line-height": [
+          "px",
+          "rem",
+          "em"
+        ]
+      }
+    ]
+  }
+}

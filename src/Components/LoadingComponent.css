@@ -1,0 +1,50 @@
+.loading-spinner {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.graphic {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.dot {
+  animation: load 1.5s linear;
+  animation-iteration-count: infinite;
+  background-color: var(--color-accent-1);
+  border-radius: 50%;
+  height: 1.4rem;
+  margin: calc(var(--gap-small) * 2);
+  width: 1.4rem;
+  transition: transform var(--transition-speed) linear, background-color var(--transition-speed) linear;
+}
+
+.dot:nth-of-type(2) {
+  animation-delay: 0.5s;
+  background-color: var(--color-accent-2);
+}
+
+.dot:nth-of-type(3) {
+  animation-delay: 1s;
+  background-color: var(--color-accent-3);
+}
+
+@keyframes load {
+  0% {
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(1.25);
+  }
+
+  50% {
+    transform: scale(1);
+    background-color: var(--color-text-main);
+  }
+}

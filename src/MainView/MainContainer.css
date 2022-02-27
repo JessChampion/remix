@@ -1,0 +1,50 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: 0 var(--gap-standard);
+}
+
+.login {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-action {
+  margin: var(--gap-large) 0;
+}
+
+.login-blurb,
+.login-error,
+.login-disclaimer {
+  max-width: calc(var(--container-standard) / 2);
+  margin: var(--gap-standard) 0;
+}
+
+.login-blurb {
+  font-weight: var(--font-weight-bold);
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.login-error {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-error);
+  padding: 0 3rem;
+  text-align: center;
+}
+
+.login-disclaimer {
+  display: flex;
+  font-size: var(--font-size-small);
+  margin-bottom: 20vh;
+}
+
+.login-disclaimer .icon {
+  color: var(--color-accent-3);
+  margin-right: var(--gap-standard);
+}
