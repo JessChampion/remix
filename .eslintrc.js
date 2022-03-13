@@ -1,32 +1,23 @@
 module.exports = {
   env: {
     browser: true,
-    es2021: true
+    es2021: true,
   },
-  extends: [
-    'plugin:react/recommended',
-    'airbnb'
-  ],
-  parser: '@typescript-eslint/parser',
+  extends: ["airbnb-typescript", "prettier", "prettier/react"],
+  parser: "@typescript-eslint/parser",
   parserOptions: {
-    ecmaFeatures: {
-      jsx: true
-    },
-    ecmaVersion: 'latest',
-    sourceType: 'module'
+    project: "./tsconfig.json",
   },
-  plugins: [
-    'react',
-    '@typescript-eslint'
-  ],
+  plugins: ["@typescript-eslint", "react-hooks"],
   rules: {
-    'import/extensions': 'off',
-    'import/no-unresolved': 0,
-    'no-console': (process.env.NODE_ENV === 'production') ? 'error' : 'off',
-    'no-debugger': (process.env.NODE_ENV === 'production') ? 'error' : 'off',
-    'react/jsx-filename-extension': [2, { 'extensions': ['.js', '.jsx', '.ts', '.tsx'] }],
-    'camelcase': 0,
-    'comma-dangle': 0,
-    'object-curly-newline': 0
-  }
+    quotes: ["error", "double"],
+    "@typescript-eslint/quotes": ["error", "double"],
+    "import/extensions": "off",
+    "import/no-unresolved": 0,
+    "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
+    "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
+    "react-hooks/rules-of-hooks": 2,
+    "react-hooks/exhaustive-deps": 0,
+    "@typescript-eslint/indent": 0,
+  },
 };

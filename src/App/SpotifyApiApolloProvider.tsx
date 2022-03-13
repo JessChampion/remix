@@ -1,27 +1,38 @@
-import { ApolloClient, ApolloProvider, from, InMemoryCache } from '@apollo/client';
-import { RestLink } from 'apollo-link-rest';
-import React from 'react';
+import {
+  ApolloClient,
+  ApolloProvider,
+  from,
+  InMemoryCache,
+} from "@apollo/client";
+import { RestLink } from "apollo-link-rest";
+import React from "react";
 
-import './App.css';
-import { config } from '../config';
+import "./App.scss";
+import { config } from "../config";
 
 interface ISpotifyApiApolloProvider {
-  token: string | null,
-  children: React.ReactChild
+  tokenDetails: ITokenDetails | undefined;
+  children: React.ReactChild;
 }
 
-function SpotifyApiApolloProvider({ token, children }: ISpotifyApiApolloProvider) {
-  console.log({ token });
-  const restLink = new RestLink({ uri: config.api });
+function SpotifyApiApolloProvider({
+  tokenDetails,
+  children,
+}: ISpotifyApiApolloProvider) {
+  const restLink = new RestLink({
+    uri: config.api,
+    headers: {
+      Authorization: `Bearer ${tokenDetails?.access}`,
+    },
+  });
+
   const link = from([restLink]);
   const client = new ApolloClient({
     link,
-    cache: new InMemoryCache()
+    cache: new InMemoryCache(),
   });
 
-  return (
-    <ApolloProvider client={client}>{children}</ApolloProvider>
-  );
+  return <ApolloProvider client={client}>{children}</ApolloProvider>;
 }
 
 export default SpotifyApiApolloProvider;

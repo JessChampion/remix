@@ -1,20 +1,18 @@
-import React from 'react';
-import './MainLayout.css';
+import React from "react";
+import "./MainLayout.scss";
 
 interface IAppMainLayoutProps {
   children: {
-    input: React.ReactElement
-    output: React.ReactElement
-  }
+    input: React.ReactElement;
+    output: React.ReactElement;
+  };
 }
 
 function MainLayout({ children }: IAppMainLayoutProps) {
   const { input, output } = children;
   return (
     <main className="app-main">
-      <div>
-        {input}
-      </div>
+      {input}
       {output}
     </main>
   );

@@ -1,0 +1,63 @@
+@import "../globals";
+
+.text-filter {
+  display: flex;
+  align-items: stretch;
+
+  &-text-box {
+    align-items: stretch;
+    display: flex;
+    flex-grow: 1;
+    position: relative;
+
+    .label {
+      align-items: center;
+      align-self: center;
+      display: inline-flex;
+      color: $color-accent-3;
+      margin-right: $gap-standard;
+      text-transform: capitalize;
+
+      .icon {
+        margin-right: $gap-mid;
+      }
+    }
+
+    input {
+      appearance: none;
+      border: $border-width solid $color-text-main;
+      padding: $gap-mid;
+      border-radius: $border-radius;
+      flex-grow: 1;
+      line-height: 1.5;
+    }
+  }
+
+  &-filter,
+  &-clear {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $gap-mid $gap-standard;
+    font-weight: $font-weight-bold;
+    color: $color-accent-3;
+    font-size: $font-size-mid;
+
+    @include hover-focus-active {
+      color: $color-accent-2;
+      text-decoration: underline;
+    }
+  }
+
+  &-clear {
+    position: absolute;
+    right: 0;
+    height: 100%;
+  }
+
+  &-filter {
+    border: $border-width solid $color-text-main;
+    border-left: 0;
+    border-radius: 0 $border-radius $border-radius 0;
+  }
+}

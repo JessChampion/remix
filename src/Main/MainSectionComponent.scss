@@ -1,0 +1,31 @@
+@import "../globals";
+
+.main-section {
+  width: 100%;
+
+  &-toggle {
+    width: 100%;
+    margin: 0 0 $gap-standard;
+  }
+
+  &-content {
+    display: none;
+    padding: 0 0 $gap-mid;
+  }
+
+  &.active {
+    .main-section {
+      &-toggle {
+        display: none;
+      }
+
+      &-content {
+        display: block;
+      }
+    }
+  }
+
+  & + .main-section .main-section-toggle {
+    margin-top: $gap-small;
+  }
+}

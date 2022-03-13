@@ -1,0 +1,50 @@
+@import "../globals";
+
+.app-header {
+  margin: 0 0 $gap-standard;
+  position: relative;
+
+  &-wrap {
+    align-items: flex-start;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: $container-standard;
+  }
+
+  &-title {
+    font-size: $font-size-h1;
+    margin: 0;
+
+    .letter {
+      &:first-of-type {
+        text-shadow: 0.2rem 0 0.1rem $color-accent-2;
+      }
+
+      &:nth-of-type(2) {
+        text-shadow: 0.3rem 0 0.1rem $color-accent-2;
+      }
+
+      &:last-of-type {
+        position: relative;
+        text-shadow: 0.4rem 0 0.1rem $color-accent-2;
+
+        &::after {
+          background: transparentize($color-accent-2, 0.35);
+          box-shadow: 0 0 0.1rem 0 $color-accent-2;
+          bottom: 0.25em;
+          border-radius: $border-radius;
+          content: "";
+          position: absolute;
+          width: calc(#{100vw} - 2.65em);
+          left: calc(100% + 0.075em);
+          height: 0.03em;
+
+          @include breakpoint-sm-up {
+            width: calc(#{$container-standard} - 2em);
+          }
+        }
+      }
+    }
+  }
+}

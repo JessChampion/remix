@@ -1,0 +1,29 @@
+$color-bg-main: #0d0d0d;
+$color-text-main: #ffffff;
+$color-accent-1: #3ffff9;
+$color-accent-2: #ff3fa5;
+$color-accent-3: #ff993f;
+$color-error: #ff493f;
+$gap-small: 0.25rem;
+$gap-mid: 0.5rem;
+$gap-standard: 1rem;
+$gap-large: 2rem;
+/* stylelint-disable-next-line unit-disallowed-list */
+$border-width: 1px;
+$border-width-fine: $border-width / 2;
+$border-width-bold: 0.15rem;
+$border-radius: 0.5rem;
+
+/* stylelint-disable-next-line unit-disallowed-list */
+$font-size-base: 15px;
+$font-size-x-small: 0.9rem;
+$font-size-small: 1rem;
+$font-size-standard: 1.1rem;
+$font-size-mid: 1.2rem;
+$font-size-ml: 1.5rem;
+$font-size-large: 2rem;
+$font-size-h1: 3.25rem;
+$font-weight-standard: 300;
+$font-weight-bold: 500;
+$container-standard: 50rem;
+$transition-speed: 300ms;

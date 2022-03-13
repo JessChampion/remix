@@ -1,0 +1,44 @@
+@import "variables";
+// Shortcut for hover, focus and active states
+@mixin hover-focus-active {
+  &:hover:not(:disabled),
+  &:focus:not(:disabled),
+  &:active:not(:disabled) {
+    @content;
+  }
+}
+
+// Shortcut for focus and active states
+@mixin focus-active {
+  &:focus,
+  &:active {
+    @content;
+  }
+}
+
+// Target styles to print only
+@mixin print {
+  @media print {
+    @content;
+  }
+}
+
+// Cut off text with ellipsis when it gets too lon...
+@mixin truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// Media Queries
+@mixin breakpoint-custom-up($min) {
+  @media all and (min-width: $min) {
+    @content;
+  }
+}
+
+@mixin breakpoint-sm-up {
+  @include breakpoint-custom-up($container-standard) {
+    @content;
+  }
+}

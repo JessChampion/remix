@@ -1,0 +1,125 @@
+@import "../../globals";
+
+.seed-selection {
+  margin: 0;
+  padding: 0;
+
+  &-type-selector {
+    display: flex;
+    justify-content: space-between;
+    margin: $gap-standard 0 $gap-large;
+  }
+
+  &-tab {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: calc(33% - #{$gap-mid});
+
+    &.active {
+      color: $color-accent-2;
+      position: relative;
+
+      span {
+        border-bottom: $border-width solid $color-accent-1;
+      }
+    }
+  }
+
+  &-separator {
+    padding: $gap-standard;
+    position: relative;
+    width: 100%;
+    text-align: center;
+
+    span {
+      display: inline-block;
+      background: $color-bg-main;
+      padding: 0 $gap-mid;
+      color: $color-accent-3;
+    }
+
+    &:before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      border-bottom: $border-width solid $color-text-main;
+      left: 0;
+      top: 50%;
+      z-index: -1;
+    }
+
+    &:empty {
+      margin: 0.6rem 0;
+    }
+  }
+
+  &-list-header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: $gap-standard;
+    .seed-selection-list-title {
+      margin: 0 $gap-mid 0 0;
+    }
+
+    .genre-filter {
+      flex-grow: 0.5;
+    }
+  }
+
+  &-list-title {
+    color: $color-accent-3;
+    display: block;
+    margin: 0 0 $gap-mid;
+  }
+
+  &-list-contents {
+    max-height: 22rem;
+    margin: 0;
+    overflow-y: auto;
+    padding: $gap-small 0 $gap-standard;
+
+    &.genres {
+      align-items: stretch;
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+
+  .genre {
+    display: inline-block;
+    width: calc(33% - #{$gap-mid * (2 / 3)});
+    margin: 0 $gap-mid $gap-mid 0;
+
+    &:nth-of-type(3n) {
+      margin-right: 0;
+    }
+
+    &-button {
+      align-items: center;
+      border: $border-width solid $color-text-main;
+      border-radius: $border-radius;
+      display: flex;
+      font-size: $font-size-mid;
+      justify-content: center;
+      min-height: 4.5rem;
+      padding: 0 $gap-mid;
+      text-align: center;
+      text-transform: capitalize;
+      width: 100%;
+
+      span {
+        border-bottom: $border-width solid transparent;
+      }
+
+      @include hover-focus-active {
+        color: $color-accent-3;
+
+        span {
+          border-bottom-color: $color-accent-3;
+        }
+      }
+    }
+  }
+}

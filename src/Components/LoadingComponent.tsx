@@ -1,18 +1,18 @@
-import React from 'react';
+import React from "react";
 
-import './LoadingComponent.css';
-import { template_main } from '../templateStrings';
+import "./LoadingComponent.scss";
+import { TEMPLATE_APP } from "../templateStrings";
 
 interface ILoadingComponentProps {
-  className?: string
+  className?: string;
 }
 
 function LoadingComponent({ className }: ILoadingComponentProps) {
   return (
     <div
       className={`loading-spinner ${className}`}
-      title={template_main.loading}
-      aria-label={template_main.loading}
+      title={TEMPLATE_APP.loading}
+      aria-label={TEMPLATE_APP.loading}
     >
       <div className="graphic">
         <span className="dot" />
@@ -24,7 +24,7 @@ function LoadingComponent({ className }: ILoadingComponentProps) {
 }
 
 LoadingComponent.defaultProps = {
-  className: ''
+  className: "",
 };
 
 export default LoadingComponent;

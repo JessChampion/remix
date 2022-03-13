@@ -1,0 +1,32 @@
+@import "globals";
+
+html {
+  font-size: $font-size-base;
+}
+
+body {
+  background: $color-bg-main;
+  color: $color-text-main;
+  font-family: Quicksand, "Helvetica Neue", sans-serif;
+  font-size: $font-size-standard;
+  font-weight: $font-weight-standard;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body,
+.root {
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
+  width: 100%;
+}
+
+strong {
+  font-weight: $font-weight-bold;
+}
+
+button {
+  cursor: pointer;
+}

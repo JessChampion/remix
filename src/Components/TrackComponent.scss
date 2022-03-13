@@ -1,0 +1,39 @@
+@import "../globals";
+
+.track {
+  &-button {
+    appearance: none;
+    align-items: center;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-gap: 0 $gap-mid + $gap-small;
+    margin-bottom: $gap-small;
+  }
+
+  &-image {
+    grid-row: 1 / span 5;
+
+    img {
+      height: 4.5rem;
+      width: 4.5rem;
+    }
+  }
+
+  &-artist,
+  &-album {
+    font-size: $font-size-small;
+  }
+
+  &-name {
+    grid-row: 2;
+  }
+
+  &-artist {
+    grid-row: 3;
+  }
+
+  &-album {
+    grid-row: 4;
+  }
+}

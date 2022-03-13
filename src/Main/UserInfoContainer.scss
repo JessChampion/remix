@@ -1,0 +1,37 @@
+@import "../globals";
+
+.user-info {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.15rem;
+  margin-left: auto;
+  min-height: 2rem;
+  position: relative;
+  z-index: 2;
+
+  &-profile-link {
+    display: inline-flex;
+    border: $border-width-bold solid transparentize($color-accent-2, 0.35);
+    border-radius: 50%;
+    overflow: hidden;
+    margin-left: $gap-mid;
+
+    @include hover-focus-active {
+      border-color: $color-accent-3;
+    }
+  }
+
+  &-profile-image {
+    max-height: 2.5rem;
+    max-width: 2.5rem;
+  }
+
+  .button {
+    border-bottom-color: $color-text-main;
+    border-bottom-width: $border-width-fine;
+    font-size: $font-size-small;
+    padding: 0.1rem 0;
+    margin-top: -0.2rem;
+  }
+}

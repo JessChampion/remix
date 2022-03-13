@@ -1,20 +1,29 @@
-import React from 'react';
+import React from "react";
 
-import './ButtonComponent.css';
+import "./ButtonComponent.scss";
+
+type ValidVariant = "standard" | "link";
 
 interface IButtonComponentProps {
-  onClick: Function
-  className?: string
-  children: React.ReactChild
+  onClick: Function;
+  variant?: ValidVariant;
+  className?: string;
+  children: React.ReactChild;
 }
 
-function ButtonComponent({ onClick, className, children, ...restProps }: IButtonComponentProps) {
+function ButtonComponent({
+  onClick,
+  className,
+  children,
+  variant,
+  ...restProps
+}: IButtonComponentProps) {
   return (
     <button
-      className={`button ${className}`}
+      className={`button button--${variant} ${className}`}
       onClick={() => onClick()}
       // eslint-disable-next-line react/jsx-props-no-spreading
-      {...{ type: 'button', ...restProps }}
+      {...{ type: "button", ...restProps }}
     >
       {children}
     </button>
@@ -22,7 +31,8 @@ function ButtonComponent({ onClick, className, children, ...restProps }: IButton
 }
 
 ButtonComponent.defaultProps = {
-  className: ''
+  variant: "standard",
+  className: "",
 };
 
 export default ButtonComponent;

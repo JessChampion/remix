@@ -1,0 +1,12 @@
+@import "../globals";
+
+.app {
+  border: $border-width solid $color-text-main;
+  display: flex;
+  flex-direction: column;
+  font-size: $font-size-standard;
+  height: 100%;
+  margin: 0 auto;
+  max-width: $container-standard;
+  width: 100%;
+}

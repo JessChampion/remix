@@ -1,0 +1,35 @@
+@import "../globals";
+
+.artist {
+  &-button {
+    appearance: none;
+    align-items: center;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-gap: 0 $gap-mid + $gap-small;
+    margin-bottom: $gap-small;
+  }
+
+  &-image {
+    grid-row: 1 / span 4;
+
+    img {
+      height: 4rem;
+      width: 4rem;
+    }
+  }
+
+  &-name {
+    font-size: $font-size-mid;
+    line-height: 1.2;
+    grid-row: 2;
+  }
+
+  &-genres {
+    text-transform: capitalize;
+    font-size: $font-size-small;
+    grid-row: 3;
+    @include truncate;
+  }
+}

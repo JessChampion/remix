@@ -1,0 +1,9 @@
+@import "../globals";
+
+.app-main {
+  flex-grow: 1;
+  margin: 0 auto;
+  max-width: 100%;
+  padding: 0 $gap-standard;
+  width: $container-standard;
+}

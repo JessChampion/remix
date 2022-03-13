@@ -1,0 +1,59 @@
+@import "../globals";
+
+.button {
+  align-items: center;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  font-weight: $font-weight-bold;
+  position: relative;
+
+  @include hover-focus-active {
+    box-shadow: 0.1rem 0.1rem 0 0.1rem $color-accent-1;
+    color: $color-accent-2;
+  }
+
+  &--standard {
+    border: $border-width solid $color-text-main;
+    border-radius: $border-radius;
+    font-size: $font-size-mid;
+    color: $color-accent-1;
+    padding: $gap-standard;
+  }
+
+  &--link {
+    border-bottom: $border-width solid $color-bg-main;
+    font-size: $font-size-standard;
+    padding: $gap-small;
+
+    @include hover-focus-active {
+      background-color: $color-accent-1;
+      box-shadow: none;
+      color: $color-bg-main;
+    }
+  }
+
+  &::after {
+    background: transparent;
+    bottom: calc(#{$border-width} * -2.5);
+    box-shadow: 0.1rem 0.1rem 0 0.1rem $color-bg-main;
+    content: "";
+    display: block;
+    height: calc(#{$border-width} * 2);
+    left: calc(#{$border-width} * 2);
+    position: absolute;
+    width: calc(100% - #{$border-width * 2});
+    transition: background-color $transition-speed linear,
+      box-shadow $transition-speed linear, color $transition-speed linear,
+      transform $transition-speed linear;
+    z-index: -1;
+  }
+
+  &.icon-right .icon {
+    margin-left: $gap-standard;
+  }
+
+  &.icon-left .icon {
+    margin-right: $gap-standard;
+  }
+}
