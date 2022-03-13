@@ -2,7 +2,7 @@ import React from "react";
 
 import "./ButtonComponent.scss";
 
-type ValidVariant = "standard" | "link";
+type ValidVariant = "standard" | "link" | "tab";
 
 interface IButtonComponentProps {
   onClick: Function;

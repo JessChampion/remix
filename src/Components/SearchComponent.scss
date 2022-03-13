@@ -3,18 +3,20 @@
 .search-form {
   display: flex;
   align-items: stretch;
+  flex-wrap: wrap;
+
+  &-search-label {
+    display: inline-block;
+    align-self: center;
+    color: $color-accent-3;
+    margin: $gap-small $gap-standard $gap-small 0;
+  }
 
   &-search-box {
     align-items: stretch;
     display: flex;
     flex-grow: 1;
     position: relative;
-
-    .label {
-      align-self: center;
-      color: $color-accent-3;
-      margin-right: $gap-standard;
-    }
 
     input {
       appearance: none;

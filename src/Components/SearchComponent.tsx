@@ -37,8 +37,10 @@ const SearchComponent = forwardRef<HTMLInputElement, ISearchComponentProps>(
 
     return (
       <div className={`search-form ${className}`}>
-        <label className="search-form-search-box" htmlFor={id}>
+        <label className="search-form-search-label" htmlFor={id}>
           <span className="label">{label}</span>
+        </label>
+        <div className="search-form-search-box">
           <input
             type="text"
             id={id}
@@ -56,14 +58,14 @@ const SearchComponent = forwardRef<HTMLInputElement, ISearchComponentProps>(
               <IconComponent type="close" alt={TEMPLATE_APP.clearSearch} />
             </button>
           )}
-        </label>
-        <button
-          type="submit"
-          className="search-form-search"
-          onClick={handleSearch}
-        >
-          <IconComponent type="search" alt={TEMPLATE_APP.search} />
-        </button>
+          <button
+            type="submit"
+            className="search-form-search"
+            onClick={handleSearch}
+          >
+            <IconComponent type="search" alt={TEMPLATE_APP.search} />
+          </button>
+        </div>
       </div>
     );
   }

@@ -7,10 +7,15 @@
   display: flex;
   font-weight: $font-weight-bold;
   position: relative;
+  transition: border $transition-speed linear, color $transition-speed linear;
 
   @include hover-focus-active {
     box-shadow: 0.1rem 0.1rem 0 0.1rem $color-accent-1;
     color: $color-accent-2;
+  }
+
+  span {
+    transition: border $transition-speed linear, color $transition-speed linear;
   }
 
   &--standard {
@@ -30,6 +35,51 @@
       background-color: $color-accent-1;
       box-shadow: none;
       color: $color-bg-main;
+    }
+  }
+
+  &--tab {
+    border: $border-width solid $color-text-main;
+    border-radius: $border-radius;
+    color: $color-accent-2;
+    display: flex;
+    font-size: $font-size-mid;
+    justify-content: center;
+    padding: $gap-standard;
+    text-align: center;
+    width: calc(34% + 0.1rem);
+
+    span {
+      border-bottom: $border-width solid $color-bg-main;
+    }
+
+    @include hover-focus-active {
+      color: $color-accent-3;
+      box-shadow: none !important;
+
+      span {
+        border-bottom-color: $color-accent-3;
+      }
+    }
+
+    &.active {
+      cursor: default;
+      border-bottom: 0;
+      border-radius: $border-radius $border-radius 0 0;
+      color: $color-accent-2;
+      position: relative;
+
+      span {
+        border-bottom-color: $color-accent-2;
+      }
+
+      @include hover-focus-active {
+        color: $color-accent-2;
+
+        span {
+          border-bottom-color: $color-accent-2;
+        }
+      }
     }
   }
 

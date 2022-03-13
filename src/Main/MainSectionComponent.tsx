@@ -1,7 +1,6 @@
 import React from "react";
 
 import "./MainSectionComponent.scss";
-import ButtonComponent from "../Components/ButtonComponent";
 
 interface IMainSectionComponentProps {
   type: AppSectionType;
@@ -22,12 +21,13 @@ function MainSectionComponent({
   const { toggle, content } = children;
   return (
     <div className={`main-section ${active ? "active" : ""}`}>
-      <ButtonComponent
+      <button
+        type="button"
         className="main-section-toggle"
         onClick={() => toggleActive(type)}
       >
         {toggle}
-      </ButtonComponent>
+      </button>
       <div className="main-section-content">{content}</div>
     </div>
   );

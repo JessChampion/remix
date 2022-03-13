@@ -38,6 +38,7 @@ const renderTabButton = (
       className={`seed-selection-tab ${type} ${isActive ? "active" : ""}`}
       key={type}
       onClick={() => clickHandler(type)}
+      variant="tab"
     >
       <span>{propOr("", type, TEMPLATE_SEEDS)}</span>
     </ButtonComponent>
@@ -209,49 +210,36 @@ function SeedSelectionContainer() {
           renderTabButton(type, type === currentSeedType, handleChangeSeedType)
         )}
       </div>
-      {["tracks", "artists"].includes(currentSeedType) && (
-        <>
-          <SearchComponent
-            id="seedSearch"
-            label={`${TEMPLATE_APP.search} ${
-              SEED_TYPES[currentSeedType] || ""
-            }`}
-            doSearch={handleSearch}
-            doClear={handleClearSearch}
-            currentValue={searchText}
-            ref={searchInput}
-            inputRef={searchInput.current}
-          />
-          <div className="seed-selection-separator">
-            {isEmpty(searchText) && <span>{TEMPLATE_SEEDS.orSelectFrom}</span>}
-          </div>
-        </>
-      )}
-      {currentSeedType === "tracks" && (
-        <div className="seed-selection-list">
-          {isEmpty(searchText) ? (
-            <>
-              {renderListTitle(
-                `${TEMPLATE_SEEDS.top} ${TEMPLATE_SEEDS.tracks}`
+      <div className="seed-selection-type-content">
+        {["tracks", "artists"].includes(currentSeedType) && (
+          <>
+            <SearchComponent
+              id="seedSearch"
+              label={`${TEMPLATE_APP.search} ${
+                SEED_TYPES[currentSeedType] || ""
+              }`}
+              doSearch={handleSearch}
+              doClear={handleClearSearch}
+              currentValue={searchText}
+              ref={searchInput}
+              inputRef={searchInput.current}
+            />
+            <div className="seed-selection-separator">
+              {isEmpty(searchText) && (
+                <span>{TEMPLATE_SEEDS.orSelectFrom}</span>
               )}
-              <ul className="seed-selection-list-contents tracks">
-                {topTracks.map((track: ITrackObject) => (
-                  <TrackComponent
-                    track={track}
-                    selectHandler={selectTrackHandler}
-                    key={track.id}
-                  />
-                ))}
-              </ul>
-            </>
-          ) : (
-            <>
-              <ul className="seed-selection-list-contents tracks search-results">
+            </div>
+          </>
+        )}
+        {currentSeedType === "tracks" && (
+          <div className="seed-selection-list">
+            {isEmpty(searchText) ? (
+              <>
                 {renderListTitle(
-                  `${TEMPLATE_SEEDS.matching} ${TEMPLATE_SEEDS.tracks}`
+                  `${TEMPLATE_SEEDS.top} ${TEMPLATE_SEEDS.tracks}`
                 )}
                 <ul className="seed-selection-list-contents tracks">
-                  {searchResultsTracks.map((track: ITrackObject) => (
+                  {topTracks.map((track: ITrackObject) => (
                     <TrackComponent
                       track={track}
                       selectHandler={selectTrackHandler}
@@ -259,36 +247,36 @@ function SeedSelectionContainer() {
                     />
                   ))}
                 </ul>
-              </ul>
-            </>
-          )}
-        </div>
-      )}
-      {currentSeedType === "artists" && (
-        <div className="seed-selection-list">
-          {isEmpty(searchText) ? (
-            <>
-              {renderListTitle(
-                `${TEMPLATE_SEEDS.top} ${TEMPLATE_SEEDS.artists}`
-              )}
-              <ul className="seed-selection-list-contents artists">
-                {topArtists.map((artist: IArtistObject) => (
-                  <ArtistComponent
-                    artist={artist}
-                    selectHandler={selectArtistHandler}
-                    key={artist.id}
-                  />
-                ))}
-              </ul>
-            </>
-          ) : (
-            <>
-              <ul className="seed-selection-list-contents tracks search-results">
+              </>
+            ) : (
+              <>
+                <ul className="seed-selection-list-contents tracks search-results">
+                  {renderListTitle(
+                    `${TEMPLATE_SEEDS.matching} ${TEMPLATE_SEEDS.tracks}`
+                  )}
+                  <ul className="seed-selection-list-contents tracks">
+                    {searchResultsTracks.map((track: ITrackObject) => (
+                      <TrackComponent
+                        track={track}
+                        selectHandler={selectTrackHandler}
+                        key={track.id}
+                      />
+                    ))}
+                  </ul>
+                </ul>
+              </>
+            )}
+          </div>
+        )}
+        {currentSeedType === "artists" && (
+          <div className="seed-selection-list">
+            {isEmpty(searchText) ? (
+              <>
                 {renderListTitle(
-                  `${TEMPLATE_SEEDS.matching} ${TEMPLATE_SEEDS.artists}`
+                  `${TEMPLATE_SEEDS.top} ${TEMPLATE_SEEDS.artists}`
                 )}
                 <ul className="seed-selection-list-contents artists">
-                  {searchResultsArtists.map((artist: IArtistObject) => (
+                  {topArtists.map((artist: IArtistObject) => (
                     <ArtistComponent
                       artist={artist}
                       selectHandler={selectArtistHandler}
@@ -296,50 +284,67 @@ function SeedSelectionContainer() {
                     />
                   ))}
                 </ul>
-              </ul>
-            </>
-          )}
-        </div>
-      )}
-      {currentSeedType === "genres" && (
-        <div className="seed-selection-list">
-          <div className="seed-selection-list-header">
-            {renderListTitle(
-              `${TEMPLATE_SEEDS.select} ${TEMPLATE_SEEDS.genres}`
+              </>
+            ) : (
+              <>
+                <ul className="seed-selection-list-contents tracks search-results">
+                  {renderListTitle(
+                    `${TEMPLATE_SEEDS.matching} ${TEMPLATE_SEEDS.artists}`
+                  )}
+                  <ul className="seed-selection-list-contents artists">
+                    {searchResultsArtists.map((artist: IArtistObject) => (
+                      <ArtistComponent
+                        artist={artist}
+                        selectHandler={selectArtistHandler}
+                        key={artist.id}
+                      />
+                    ))}
+                  </ul>
+                </ul>
+              </>
             )}
-            <TextFilterComponent
-              doFilter={handleGenreFilter}
-              currentValue={genreFilterText}
-              id="genre-filter"
-              doClear={handleClearGenreFilter}
-              ref={genreFilterInput}
-              className="genre-filter"
-            >
-              {{
-                label: (
-                  <span className="label">
-                    <IconComponent type="filter" alt="" />
-                    {TEMPLATE_APP.filter}
-                  </span>
-                ),
-              }}
-            </TextFilterComponent>
           </div>
-          <ul className="seed-selection-list-contents genres">
-            {displayedGenres.map((genre: string) => (
-              <li className="genre" key={genre}>
-                <button
-                  className="genre-button"
-                  type="button"
-                  onClick={() => selectGenre(genre)}
-                >
-                  <span>{genre}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+        )}
+        {currentSeedType === "genres" && (
+          <div className="seed-selection-list">
+            <div className="seed-selection-list-header">
+              {renderListTitle(
+                `${TEMPLATE_SEEDS.select} ${TEMPLATE_SEEDS.genres}`
+              )}
+              <TextFilterComponent
+                doFilter={handleGenreFilter}
+                currentValue={genreFilterText}
+                id="genre-filter"
+                doClear={handleClearGenreFilter}
+                ref={genreFilterInput}
+                className="genre-filter"
+              >
+                {{
+                  label: (
+                    <span className="label">
+                      <IconComponent type="filter" alt="" />
+                      {TEMPLATE_APP.filter}
+                    </span>
+                  ),
+                }}
+              </TextFilterComponent>
+            </div>
+            <ul className="seed-selection-list-contents genres">
+              {displayedGenres.map((genre: string) => (
+                <li className="genre" key={genre}>
+                  <button
+                    className="genre-button"
+                    type="button"
+                    onClick={() => selectGenre(genre)}
+                  >
+                    <span>{genre.replaceAll("-", " ")}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

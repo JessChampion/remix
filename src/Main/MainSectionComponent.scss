@@ -2,21 +2,41 @@
 
 .main-section {
   width: 100%;
+  border: $border-width solid $color-text-main;
+  border-radius: $border-radius;
+  overflow: hidden;
 
   &-toggle {
+    border-bottom: $border-width solid $color-text-main;
+    border-radius: 0;
+    color: $color-accent-1;
+    font-size: $font-size-ml;
+    font-weight: $font-weight-bold;
+    margin: 0;
+    padding: $gap-standard;
     width: 100%;
-    margin: 0 0 $gap-standard;
+    overflow: hidden;
+
+    @include hover-focus-active {
+      color: $color-accent-2;
+      box-shadow: inset -0.1rem -0.1rem 0 0.1rem $color-accent-1;
+    }
   }
 
   &-content {
     display: none;
-    padding: 0 0 $gap-mid;
+    padding: $gap-mid;
   }
 
   &.active {
     .main-section {
       &-toggle {
-        display: none;
+        cursor: default;
+
+        @include hover-focus-active {
+          box-shadow: none;
+          color: $color-accent-1;
+        }
       }
 
       &-content {
@@ -25,7 +45,7 @@
     }
   }
 
-  & + .main-section .main-section-toggle {
-    margin-top: $gap-small;
+  & + .main-section {
+    margin-top: $gap-mid;
   }
 }

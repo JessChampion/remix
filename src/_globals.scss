@@ -37,8 +37,14 @@
   }
 }
 
+@mixin breakpoint-xs-up {
+  @include breakpoint-custom-up($screen-xs) {
+    @content;
+  }
+}
+
 @mixin breakpoint-sm-up {
-  @include breakpoint-custom-up($container-standard) {
+  @include breakpoint-custom-up($screen-sm) {
     @content;
   }
 }
