@@ -1,9 +1,9 @@
-import { isNil } from "ramda";
+import { isNil, pathOr } from "ramda";
 import React, { useContext } from "react";
 
 import "./UserInfoContainer.scss";
 import { TEMPLATE_APP } from "../templateStrings";
-import { AppStateContext } from "../App/AppStateContextProvider";
+import { AppStateContext } from "./AppStateContextProvider";
 import ButtonComponent from "../Components/ButtonComponent";
 
 interface IUserInfoContainerProps {
@@ -11,15 +11,12 @@ interface IUserInfoContainerProps {
 }
 
 function UserInfoContainer({ logout }: IUserInfoContainerProps) {
-  const { loading, getPathValueFromState } = useContext(AppStateContext);
+  const { loading, getUserInfo } = useContext(AppStateContext);
 
-  const profileImage = getPathValueFromState(["userInfo", "images", 0, "url"]);
-  const displayName = getPathValueFromState(["userInfo", "displayName"]);
-  const spotifyUrl = getPathValueFromState([
-    "userInfo",
-    "externalUrls",
-    "spotify",
-  ]);
+  const userInfo = getUserInfo();
+  const profileImage = pathOr(undefined, ["images", 0, "url"], userInfo);
+  const displayName = pathOr(undefined, ["displayName"], userInfo);
+  const spotifyUrl = pathOr(undefined, ["externalUrls", "spotify"], userInfo);
   const label = `${displayName} ${TEMPLATE_APP.spotifyProfile}`;
 
   return (

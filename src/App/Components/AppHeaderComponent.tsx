@@ -1,6 +1,6 @@
 import "./AppHeaderComponent.scss";
 import React from "react";
-import { TEMPLATE_APP } from "../templateStrings";
+import { TEMPLATE_APP } from "../../templateStrings";
 
 interface IAppHeaderComponent {
   children: {

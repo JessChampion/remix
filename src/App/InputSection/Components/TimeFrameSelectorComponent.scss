@@ -1,0 +1,65 @@
+@import "../../../globals";
+
+.time-frame-selector {
+  display: flex;
+  color: $color-accent-3;
+
+  &__label {
+    display: inline-block;
+    font-size: $font-size-x-small;
+    text-align: center;
+    margin: 0 $gap-mid 0 0;
+  }
+
+  &__input {
+    color: $color-text-main;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    min-width: 3rem;
+    width: 3rem;
+    margin-top: -0.5rem;
+  }
+
+  input[type="range"] {
+    -webkit-appearance: none; /* Override default look */
+  }
+
+  @mixin thumb {
+    background: $color-accent-3;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 0.75rem;
+    width: 0.75rem;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    @include thumb;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    @include thumb;
+  }
+
+  @mixin track {
+    background: linear-gradient(
+      transparent,
+      transparent 30%,
+      $color-text-light 30%,
+      $color-text-light 60%,
+      transparent 60%,
+      transparent
+    );
+    height: 0.75rem;
+  }
+
+  input[type="range"]::-webkit-slider-runnable-track {
+    @include track;
+  }
+
+  input[type="range"]::-moz-range-track {
+    @include track;
+  }
+}

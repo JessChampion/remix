@@ -9,6 +9,11 @@
     grid-template-columns: auto 1fr;
     grid-gap: 0 $gap-mid + $gap-small;
     margin-bottom: $gap-small;
+
+    &[disabled] {
+      opacity: 0.4;
+      cursor: default;
+    }
   }
 
   &-image {

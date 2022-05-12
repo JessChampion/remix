@@ -2,13 +2,14 @@
 
 .search-form {
   display: flex;
-  align-items: stretch;
+  align-items: center;
   flex-wrap: wrap;
 
   &-search-label {
     display: inline-block;
     align-self: center;
     color: $color-accent-3;
+    font-weight: $font-weight-bold;
     margin: $gap-small $gap-standard $gap-small 0;
   }
 
@@ -20,11 +21,11 @@
 
     input {
       appearance: none;
-      border: $border-width solid $color-text-main;
+      border: $border-width solid $color-text-light;
       padding: $gap-mid 3rem $gap-mid $gap-mid;
       border-radius: $border-radius 0 0 $border-radius;
       flex-grow: 1;
-      line-height: 2;
+      line-height: 1.5;
     }
   }
 
@@ -51,7 +52,7 @@
   }
 
   &-search {
-    border: $border-width solid $color-text-main;
+    border: $border-width solid $color-text-light;
     border-left: 0;
     border-radius: 0 $border-radius $border-radius 0;
   }

@@ -4,40 +4,58 @@
   margin: 0;
   padding: 0;
 
-  &-type-selector {
+  &--max {
+    background: $color-bg-main;
+    border-radius: $border-radius-small;
+    padding: $gap-mid;
+    text-align: center;
+  }
+
+  &__type-selector {
     display: flex;
     justify-content: space-between;
-    margin: 0 0 $gap-standard;
+    margin: 0 0 $gap-mid;
   }
 
-  &-type-content {
-    padding: 0 $gap-standard;
+  &__tab {
+    flex-grow: 1;
+    margin-left: $gap-mid;
+
+    &:first-of-type {
+      margin-left: 0;
+    }
   }
 
-  &-tab {
+  &__type-content {
+    border-radius: $border-radius-small;
+    background: $color-bg-main;
+    padding: $gap-standard $gap-standard 0;
   }
 
-  &-separator {
-    padding: $gap-standard;
+  &__separator {
+    padding: $gap-mid;
     position: relative;
     width: 100%;
     text-align: center;
 
     span {
-      display: inline-block;
       background: $color-bg-main;
+      display: inline-block;
+      font-size: $font-size-small;
       padding: 0 $gap-mid;
       color: $color-accent-3;
+      position: relative;
+      z-index: 2;
     }
 
     &:before {
       content: "";
       position: absolute;
       width: 100%;
-      border-bottom: $border-width solid $color-text-main;
+      border-bottom: $gap-small solid $color-bg-light;
       left: 0;
       top: 50%;
-      z-index: -1;
+      z-index: 1;
     }
 
     &:empty {
@@ -45,7 +63,7 @@
     }
   }
 
-  &-list-header {
+  &__list-header {
     align-items: center;
     display: flex;
     flex-wrap: wrap;
@@ -61,13 +79,17 @@
     }
   }
 
-  &-list-title {
-    color: $color-accent-3;
-    display: block;
-    margin: 0 0 $gap-mid;
+  &__title-wrap {
+    display: flex;
   }
 
-  &-list-contents {
+  &__list-title {
+    color: $color-accent-3;
+    display: block;
+    margin: 0 auto $gap-mid 0;
+  }
+
+  &__list-contents {
     max-height: 22rem;
     margin: 0;
     overflow-y: auto;
@@ -97,7 +119,7 @@
 
     &-button {
       align-items: center;
-      border: $border-width solid $color-text-main;
+      border: none;
       border-radius: $border-radius;
       display: flex;
       font-size: $font-size-mid;
@@ -107,6 +129,11 @@
       text-align: center;
       text-transform: capitalize;
       width: 100%;
+
+      .icon {
+        margin-right: $gap-mid;
+        opacity: 0.75;
+      }
 
       span {
         border-bottom: $border-width solid transparent;
@@ -118,6 +145,11 @@
         span {
           border-bottom-color: $color-accent-3;
         }
+      }
+
+      &[disabled] {
+        cursor: default;
+        opacity: 0.5;
       }
     }
 

@@ -1,19 +1,20 @@
-@import "../globals";
+@import "../../globals";
 
 .main-section {
+  background: $color-bg-light;
   width: 100%;
-  border: $border-width solid $color-text-main;
   border-radius: $border-radius;
+  transition: height $transition-speed linear,
+    max-height $transition-speed linear;
   overflow: hidden;
 
   &-toggle {
-    border-bottom: $border-width solid $color-text-main;
     border-radius: 0;
     color: $color-accent-1;
     font-size: $font-size-ml;
     font-weight: $font-weight-bold;
     margin: 0;
-    padding: $gap-standard;
+    padding: $gap-mid;
     width: 100%;
     overflow: hidden;
 

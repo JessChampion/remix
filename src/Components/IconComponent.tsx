@@ -1,6 +1,7 @@
 import React from "react";
 // @ts-ignore
 import { ReactComponent as Alert } from "../Assets/Icons/icon-alert.svg"; // @ts-ignore
+import { ReactComponent as Check } from "../Assets/Icons/icon-check.svg"; // @ts-ignore
 import { ReactComponent as Close } from "../Assets/Icons/icon-close.svg"; // @ts-ignore
 import { ReactComponent as Edit } from "../Assets/Icons/icon-edit.svg"; // @ts-ignore
 import { ReactComponent as Filter } from "../Assets/Icons/icon-filter.svg"; // @ts-ignore
@@ -18,6 +19,7 @@ import "./IconComponent.scss";
 
 type ValidIconType =
   | "alert"
+  | "check"
   | "close"
   | "edit"
   | "filter"
@@ -53,6 +55,13 @@ const ICONS: Map<string, IIconDefinitionType> = new Map<
     {
       icon: () => <Alert />,
       alt: "alert",
+    },
+  ],
+  [
+    "check",
+    {
+      icon: () => <Check />,
+      alt: "checked",
     },
   ],
   [

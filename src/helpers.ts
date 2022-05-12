@@ -1,4 +1,4 @@
-import { find, head, isNil, propEq } from "ramda";
+import { any, find, head, isNil, propEq } from "ramda";
 
 // eslint-disable-next-line  import/prefer-default-export
 export const getImageFromSet = (
@@ -7,6 +7,16 @@ export const getImageFromSet = (
 ): IImageObject => {
   const foundImage = find<IImageObject>(propEq("width", targetSize), images);
   return (!isNil(foundImage) ? foundImage : head(images)) as IImageObject;
+};
+
+export const isSelected = (
+  currentValue: string,
+  currentSeeds: ITrackObject[] | IArtistObject[]
+) => {
+  return any<ITrackObject | IArtistObject>(
+    propEq<string>("id", currentValue),
+    currentSeeds
+  );
 };
 
 export const KEYS = {

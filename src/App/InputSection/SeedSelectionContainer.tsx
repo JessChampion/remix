@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./SeedSelectionContainer.scss";
 import { useQuery } from "@apollo/client";
-import { isEmpty, pathOr, propOr, values } from "ramda";
+import { isEmpty, isNil, pathOr, propOr, values } from "ramda";
 
 import {
   GET_TOP_ARTISTS,
@@ -19,8 +19,12 @@ import {
   GET_SEARCH_ARTISTS,
   GET_SEARCH_TRACKS,
 } from "../../Queries/searchQuery";
+import { AppStateContext, MAX_SEEDS } from "../AppStateContextProvider";
+import { isSelected } from "../../helpers";
+import TimeFrameSelectorComponent, {
+  TIME_FRAME_DEFAULT,
+} from "./Components/TimeFrameSelectorComponent";
 
-type SeedType = "artists" | "tracks" | "genres";
 const SEED_TYPES = {
   tracks: "tracks" as SeedType,
   artists: "artists" as SeedType,
@@ -35,7 +39,7 @@ const renderTabButton = (
 ) => {
   return (
     <ButtonComponent
-      className={`seed-selection-tab ${type} ${isActive ? "active" : ""}`}
+      className={`seed-selection__tab ${type} ${isActive ? "active" : ""}`}
       key={type}
       onClick={() => clickHandler(type)}
       variant="tab"
@@ -45,8 +49,14 @@ const renderTabButton = (
   );
 };
 
-const renderListTitle = (title: string) => (
-  <strong className="seed-selection-list-title">{title}</strong>
+const renderListTitle = (
+  title: string,
+  timeFrameSelector?: React.ReactElement
+) => (
+  <div className="seed-selection__title-wrap">
+    <strong className="seed-selection__list-title">{title}</strong>
+    {!isNil(timeFrameSelector) && timeFrameSelector}
+  </div>
 );
 
 function SeedSelectionContainer() {
@@ -55,6 +65,8 @@ function SeedSelectionContainer() {
   const searchInput = useRef<HTMLInputElement>(null);
   const genreFilterInput = useRef<HTMLInputElement>(null);
   const [searchText, setSearchText] = useState<string>("");
+  const [currentTimeFrame, setCurrentTimeFrame] =
+    useState<TimeFrame>(TIME_FRAME_DEFAULT);
   const [genreFilterText, setGenreFilterText] = useState<string>("");
   const [topTracks, setTopTracks] = useState<Array<ITrackObject>>([]);
   const [searchResultsTracks, setSearchResultsTracks] = useState<
@@ -68,8 +80,16 @@ function SeedSelectionContainer() {
   const [displayedGenres, setDisplayedGenres] =
     useState<Array<string>>(allGenres);
 
+  const { getInputSeeds, setInputSeeds, getInputSeedsCount } =
+    useContext(AppStateContext);
+  const currentSeeds = getInputSeeds();
+  const totalCurrentSeeds = getInputSeedsCount();
+
   const topTracksQuery = useQuery(GET_TOP_TRACKS, {
     skip: currentSeedType !== SEED_TYPES.tracks,
+    variables: {
+      timeFrame: currentTimeFrame,
+    },
     fetchPolicy: "cache-first",
   });
 
@@ -82,9 +102,14 @@ function SeedSelectionContainer() {
   });
 
   const topArtistsQuery = useQuery(GET_TOP_ARTISTS, {
+    variables: {
+      timeFrame: currentTimeFrame,
+    },
     skip: currentSeedType !== SEED_TYPES.artists,
     fetchPolicy: "cache-first",
   });
+
+  console.log({ topArtistsQuery: topArtistsQuery.variables, currentTimeFrame });
 
   const searchArtistsQuery = useQuery(GET_SEARCH_ARTISTS, {
     variables: {
@@ -100,15 +125,39 @@ function SeedSelectionContainer() {
   });
 
   const selectTrackHandler = (selectedTrack: ITrackObject) => {
-    console.log({ selectedTrack });
+    if (
+      totalCurrentSeeds < MAX_SEEDS &&
+      !isSelected(selectedTrack.id, currentSeeds?.tracks)
+    ) {
+      setInputSeeds({
+        ...currentSeeds,
+        tracks: [...currentSeeds?.tracks, selectedTrack],
+      });
+    }
   };
 
   const selectArtistHandler = (selectedArtist: IArtistObject) => {
-    console.log({ selectedArtist });
+    if (
+      totalCurrentSeeds < MAX_SEEDS &&
+      !isSelected(selectedArtist.id, currentSeeds?.artists)
+    ) {
+      setInputSeeds({
+        ...currentSeeds,
+        artists: [...currentSeeds?.artists, selectedArtist],
+      });
+    }
   };
 
   const selectGenre = (selectedGenre: string) => {
-    console.log({ selectedGenre });
+    if (
+      totalCurrentSeeds < MAX_SEEDS &&
+      !currentSeeds.genres.includes(selectedGenre)
+    ) {
+      setInputSeeds({
+        ...currentSeeds,
+        genres: [...currentSeeds?.genres, selectedGenre],
+      });
+    }
   };
 
   useEffect(() => {
@@ -125,7 +174,6 @@ function SeedSelectionContainer() {
 
   useEffect(() => {
     if (!searchTracksQuery.loading) {
-      console.log({ trackData: searchTracksQuery.data });
       setSearchResultsTracks(
         pathOr([], ["searchTracks", "tracks", "items"], searchTracksQuery.data)
       );
@@ -134,10 +182,6 @@ function SeedSelectionContainer() {
 
   useEffect(() => {
     if (!searchArtistsQuery.loading) {
-      console.log({
-        artistData: searchArtistsQuery.data?.artists?.items,
-        raw: searchArtistsQuery.data,
-      });
       setSearchResultsArtists(
         pathOr(
           [],
@@ -186,7 +230,6 @@ function SeedSelectionContainer() {
   };
 
   const handleGenreFilter = (value: string) => {
-    console.log({ value });
     setGenreFilterText(value);
   };
 
@@ -203,14 +246,34 @@ function SeedSelectionContainer() {
     handleClearGenreFilter();
   };
 
+  const handleChangeTimeFrame = (value: TimeFrame) => {
+    console.log({ value });
+    setCurrentTimeFrame(value);
+  };
+
+  const timeFrameSelector = (
+    <TimeFrameSelectorComponent
+      currentTimeFrame={currentTimeFrame}
+      onSelect={handleChangeTimeFrame}
+    />
+  );
+
+  if (totalCurrentSeeds === MAX_SEEDS) {
+    return (
+      <div className="seed-selection seed-selection--max">
+        {TEMPLATE_SEEDS.maxSeeds}
+      </div>
+    );
+  }
+
   return (
     <div className="seed-selection">
-      <div role="tablist" className="seed-selection-type-selector">
+      <div role="tablist" className="seed-selection__type-selector">
         {values(SEED_TYPES).map((type: SeedType) =>
           renderTabButton(type, type === currentSeedType, handleChangeSeedType)
         )}
       </div>
-      <div className="seed-selection-type-content">
+      <div className="seed-selection__type-content">
         {["tracks", "artists"].includes(currentSeedType) && (
           <>
             <SearchComponent
@@ -224,7 +287,7 @@ function SeedSelectionContainer() {
               ref={searchInput}
               inputRef={searchInput.current}
             />
-            <div className="seed-selection-separator">
+            <div className="seed-selection__separator">
               {isEmpty(searchText) && (
                 <span>{TEMPLATE_SEEDS.orSelectFrom}</span>
               )}
@@ -232,29 +295,31 @@ function SeedSelectionContainer() {
           </>
         )}
         {currentSeedType === "tracks" && (
-          <div className="seed-selection-list">
+          <div className="seed-selection__list">
             {isEmpty(searchText) ? (
               <>
                 {renderListTitle(
-                  `${TEMPLATE_SEEDS.top} ${TEMPLATE_SEEDS.tracks}`
+                  `${TEMPLATE_SEEDS.top} ${TEMPLATE_SEEDS.tracks}`,
+                  timeFrameSelector
                 )}
-                <ul className="seed-selection-list-contents tracks">
+                <ul className="seed-selection__list-contents tracks">
                   {topTracks.map((track: ITrackObject) => (
                     <TrackComponent
                       track={track}
                       selectHandler={selectTrackHandler}
                       key={track.id}
+                      disabled={isSelected(track.id, currentSeeds.tracks)}
                     />
                   ))}
                 </ul>
               </>
             ) : (
               <>
-                <ul className="seed-selection-list-contents tracks search-results">
+                <ul className="seed-selection__list-contents tracks search-results">
                   {renderListTitle(
                     `${TEMPLATE_SEEDS.matching} ${TEMPLATE_SEEDS.tracks}`
                   )}
-                  <ul className="seed-selection-list-contents tracks">
+                  <ul className="seed-selection__list-contents tracks">
                     {searchResultsTracks.map((track: ITrackObject) => (
                       <TrackComponent
                         track={track}
@@ -269,34 +334,37 @@ function SeedSelectionContainer() {
           </div>
         )}
         {currentSeedType === "artists" && (
-          <div className="seed-selection-list">
+          <div className="seed-selection__list">
             {isEmpty(searchText) ? (
               <>
                 {renderListTitle(
-                  `${TEMPLATE_SEEDS.top} ${TEMPLATE_SEEDS.artists}`
+                  `${TEMPLATE_SEEDS.top} ${TEMPLATE_SEEDS.artists}`,
+                  timeFrameSelector
                 )}
-                <ul className="seed-selection-list-contents artists">
+                <ul className="seed-selection__list-contents artists">
                   {topArtists.map((artist: IArtistObject) => (
                     <ArtistComponent
                       artist={artist}
                       selectHandler={selectArtistHandler}
                       key={artist.id}
+                      disabled={isSelected(artist.id, currentSeeds.artists)}
                     />
                   ))}
                 </ul>
               </>
             ) : (
               <>
-                <ul className="seed-selection-list-contents tracks search-results">
+                <ul className="seed-selection__list-contents tracks search-results">
                   {renderListTitle(
                     `${TEMPLATE_SEEDS.matching} ${TEMPLATE_SEEDS.artists}`
                   )}
-                  <ul className="seed-selection-list-contents artists">
+                  <ul className="seed-selection__list-contents artists">
                     {searchResultsArtists.map((artist: IArtistObject) => (
                       <ArtistComponent
                         artist={artist}
                         selectHandler={selectArtistHandler}
                         key={artist.id}
+                        disabled={isSelected(artist.id, currentSeeds.artists)}
                       />
                     ))}
                   </ul>
@@ -306,8 +374,8 @@ function SeedSelectionContainer() {
           </div>
         )}
         {currentSeedType === "genres" && (
-          <div className="seed-selection-list">
-            <div className="seed-selection-list-header">
+          <div className="seed-selection__list">
+            <div className="seed-selection__list-header">
               {renderListTitle(
                 `${TEMPLATE_SEEDS.select} ${TEMPLATE_SEEDS.genres}`
               )}
@@ -329,18 +397,23 @@ function SeedSelectionContainer() {
                 }}
               </TextFilterComponent>
             </div>
-            <ul className="seed-selection-list-contents genres">
-              {displayedGenres.map((genre: string) => (
-                <li className="genre" key={genre}>
-                  <button
-                    className="genre-button"
-                    type="button"
-                    onClick={() => selectGenre(genre)}
-                  >
-                    <span>{genre.replaceAll("-", " ")}</span>
-                  </button>
-                </li>
-              ))}
+            <ul className="seed-selection__list-contents genres">
+              {displayedGenres.map((genre: string) => {
+                const isAlreadyAdded = currentSeeds.genres.includes(genre);
+                return (
+                  <li className="genre" key={genre}>
+                    <button
+                      className="genre-button"
+                      type="button"
+                      onClick={() => selectGenre(genre)}
+                      disabled={isAlreadyAdded}
+                    >
+                      {isAlreadyAdded && <IconComponent type="check" />}
+                      <span>{genre.replaceAll("-", " ")}</span>
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         )}

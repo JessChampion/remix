@@ -1,0 +1,51 @@
+@import "../../globals";
+
+.login {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &-action {
+    margin: $gap-large 0;
+  }
+
+  &-blurb,
+  &-error,
+  &-disclaimer {
+    max-width: calc(#{$container-standard} / 2);
+    margin: $gap-standard 0;
+  }
+
+  &-blurb {
+    font-weight: $font-weight-bold;
+    padding: 0 1.5rem;
+    text-align: center;
+  }
+
+  &-error {
+    font-size: $font-size-small;
+    font-weight: $font-weight-bold;
+    color: $color-error;
+    padding: 0 3rem;
+    text-align: center;
+  }
+
+  &-disclaimer {
+    align-items: flex-start;
+    display: flex;
+    font-size: $font-size-small;
+    margin-bottom: 20vh;
+
+    .icon {
+      font-size: $font-size-large;
+      color: $color-accent-3;
+      margin: 0.75rem $gap-standard 0 0;
+    }
+
+    p + p {
+      margin-top: $gap-mid;
+    }
+  }
+}

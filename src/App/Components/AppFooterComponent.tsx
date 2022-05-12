@@ -1,6 +1,6 @@
 import React from "react";
 import "./AppFooterComponent.scss";
-import { TEMPLATE_APP } from "../templateStrings";
+import { TEMPLATE_APP } from "../../templateStrings";
 
 function AppFooterComponent({ logout }: { logout: Function }) {
   return (

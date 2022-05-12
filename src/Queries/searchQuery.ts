@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_SEARCH_ARTISTS = gql`
-  query GET_TOP_ARTISTS($query: String!) {
+  query GET_SEARCH_ARTISTS($query: String!) {
     searchArtists(q: $query, type: "artist")
       @rest(type: "SearchArtists", path: "/search?{args}") {
       artists {

@@ -7,9 +7,14 @@ import { getImageFromSet } from "../helpers";
 interface IArtistComponentProps {
   artist: IArtistObject;
   selectHandler: Function;
+  disabled?: boolean;
 }
 
-function ArtistComponent({ artist, selectHandler }: IArtistComponentProps) {
+function ArtistComponent({
+  artist,
+  selectHandler,
+  disabled,
+}: IArtistComponentProps) {
   const imgSrc = getImageFromSet(artist.images)?.url;
   return (
     <li className="artist" key={artist.id}>
@@ -17,6 +22,7 @@ function ArtistComponent({ artist, selectHandler }: IArtistComponentProps) {
         type="button"
         className="artist-button"
         onClick={() => selectHandler(artist)}
+        disabled={disabled || false}
       >
         <div className="artist-image">
           {imgSrc ? (
@@ -35,4 +41,7 @@ function ArtistComponent({ artist, selectHandler }: IArtistComponentProps) {
   );
 }
 
+ArtistComponent.defaultProps = {
+  disabled: false,
+};
 export default ArtistComponent;

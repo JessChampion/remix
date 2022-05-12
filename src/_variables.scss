@@ -1,5 +1,7 @@
-$color-bg-main: #0d0d0d;
+$color-bg-light: #181718;
+$color-bg-main: #010101;
 $color-text-main: #ffffff;
+$color-text-light: transparentize($color-text-main, 0.3);
 $color-accent-1: #3ffff9;
 $color-accent-2: #ff3fa5;
 $color-accent-3: #ff993f;
@@ -13,9 +15,11 @@ $border-width: 1px;
 $border-width-fine: $border-width / 2;
 $border-width-bold: 0.15rem;
 $border-radius: 0.5rem;
+$border-radius-small: 0.4rem;
 
 /* stylelint-disable-next-line unit-disallowed-list */
 $font-size-base: 15px;
+$font-size-xx-small: 0.8rem;
 $font-size-x-small: 0.9rem;
 $font-size-small: 1rem;
 $font-size-standard: 1.1rem;

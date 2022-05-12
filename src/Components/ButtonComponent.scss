@@ -27,19 +27,19 @@
   }
 
   &--link {
-    border-bottom: $border-width solid $color-bg-main;
+    border-bottom: $border-width solid $color-bg-light;
     font-size: $font-size-standard;
     padding: $gap-small;
 
     @include hover-focus-active {
       background-color: $color-accent-1;
       box-shadow: none;
-      color: $color-bg-main;
+      color: $color-bg-light;
     }
   }
 
   &--tab {
-    border: $border-width solid $color-text-main;
+    background: $color-bg-main;
     border-radius: $border-radius;
     color: $color-accent-2;
     display: flex;
@@ -47,10 +47,9 @@
     justify-content: center;
     padding: $gap-standard;
     text-align: center;
-    width: calc(34% + 0.1rem);
 
     span {
-      border-bottom: $border-width solid $color-bg-main;
+      border-bottom: $border-width solid $color-accent-2;
     }
 
     @include hover-focus-active {
@@ -63,21 +62,29 @@
     }
 
     &.active {
-      cursor: default;
-      border-bottom: 0;
       border-radius: $border-radius $border-radius 0 0;
-      color: $color-accent-2;
+      cursor: default;
+      color: $color-accent-3;
       position: relative;
 
+      &:before {
+        display: block;
+        content: "";
+        background: $color-bg-main;
+        bottom: -$gap-standard;
+        height: $gap-standard;
+        position: absolute;
+        width: 100%;
+        z-index: 0;
+      }
+
       span {
-        border-bottom-color: $color-accent-2;
+        border-bottom-color: transparent;
       }
 
       @include hover-focus-active {
-        color: $color-accent-2;
-
         span {
-          border-bottom-color: $color-accent-2;
+          border-bottom-color: transparent;
         }
       }
     }
@@ -86,7 +93,7 @@
   &::after {
     background: transparent;
     bottom: calc(#{$border-width} * -2.5);
-    box-shadow: 0.1rem 0.1rem 0 0.1rem $color-bg-main;
+    box-shadow: 0.1rem 0.1rem 0 0.1rem $color-bg-light;
     content: "";
     display: block;
     height: calc(#{$border-width} * 2);

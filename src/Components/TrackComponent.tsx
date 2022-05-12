@@ -8,6 +8,7 @@ interface ITrackComponentProps {
   size?: "small" | "standard";
   track: ITrackObject;
   selectHandler: Function;
+  disabled?: boolean;
 }
 
 const TARGET_SIZES = {
@@ -15,7 +16,12 @@ const TARGET_SIZES = {
   standard: 300,
 };
 
-function TrackComponent({ track, size, selectHandler }: ITrackComponentProps) {
+function TrackComponent({
+  track,
+  size,
+  selectHandler,
+  disabled,
+}: ITrackComponentProps) {
   const targetSize = propOr(size, "standard", TARGET_SIZES) as number;
   const imgSrc = getImageFromSet(track.album.images, targetSize)?.url;
   const mainArtist = head(track.artists)?.name;
@@ -25,6 +31,7 @@ function TrackComponent({ track, size, selectHandler }: ITrackComponentProps) {
         type="button"
         className="track-button"
         onClick={() => selectHandler(track)}
+        disabled={disabled || false}
       >
         <div className="track-image">
           {imgSrc ? (
@@ -46,5 +53,6 @@ function TrackComponent({ track, size, selectHandler }: ITrackComponentProps) {
 
 TrackComponent.defaultProps = {
   size: "standard",
+  disabled: false,
 };
 export default TrackComponent;

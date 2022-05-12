@@ -1,0 +1,130 @@
+@import "../../globals";
+
+.seeds-selected {
+  display: flex;
+  align-items: center;
+
+  &__wrap {
+    display: flex;
+    overflow-x: auto;
+    margin-left: auto;
+  }
+
+  &__artists,
+  &__genres,
+  &__tracks,
+  &__placeholders {
+    display: flex;
+    margin-left: $gap-mid;
+
+    &:empty {
+      margin-left: 0;
+    }
+  }
+
+  &__label {
+    align-self: flex-start;
+  }
+}
+
+.current-seed {
+  $seed-full: 5rem;
+  $seed-small: 1.5rem;
+  color: $color-accent-1;
+  display: flex;
+  flex-direction: column;
+  font-size: $font-size-small;
+  margin: 0;
+  max-width: $seed-full;
+  height: $seed-full;
+  width: $seed-full;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  transition: max-height $transition-speed linear,
+    max-width $transition-speed linear;
+
+  + .current-seed {
+    margin-left: $gap-mid;
+  }
+
+  &__image {
+    height: $seed-full;
+    max-height: $seed-full;
+    max-width: $seed-full;
+    width: $seed-full;
+  }
+
+  &__label {
+    background: transparentize($color-bg-light, 0.5);
+    position: absolute;
+    font-size: $font-size-xx-small;
+    bottom: 0;
+    line-height: 1.5;
+    max-height: 1.7rem;
+  }
+
+  &__img-placeholder {
+    display: flex;
+    align-items: center;
+    height: $seed-full;
+    max-height: $seed-full;
+    max-width: $seed-full;
+    width: $seed-full;
+    background: $color-accent-2;
+    overflow: hidden;
+
+    span {
+      background: transparentize($color-bg-light, 0.5);
+      color: $color-text-main;
+
+      .current-seed--genres & {
+        text-transform: capitalize;
+      }
+    }
+
+    + .current-seed__label {
+      display: none;
+    }
+  }
+
+  &:nth-of-type(2n) {
+    .current-seed__img-placeholder {
+      background: $color-accent-3;
+    }
+  }
+
+  &:nth-of-type(3n) {
+    .current-seed__img-placeholder {
+      background: $color-accent-1;
+    }
+  }
+
+  .main-section:not(.active) & {
+    background: $color-accent-1;
+    max-height: $seed-small;
+    max-width: $seed-small;
+
+    > .current-seed {
+      &__image {
+        max-height: $seed-small;
+        max-width: $seed-small;
+      }
+
+      &__label {
+        display: none;
+      }
+    }
+  }
+
+  &--placeholder {
+    border: $border-width solid $color-accent-1;
+    display: block;
+    height: $seed-full;
+    width: $seed-full;
+
+    .main-section:not(.active) & {
+      background: none;
+    }
+  }
+}

@@ -4,10 +4,18 @@ import "./App.scss";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { isNil } from "ramda";
 import SpotifyApiApolloProvider from "./SpotifyApiApolloProvider";
-import MainContainer from "../Main/MainContainer";
-import AppAuthHandler from "./AppAuthHandler";
+import AppLayoutContainer from "./AppLayoutContainer";
 import { config } from "../config";
 import AppStateContextProvider from "./AppStateContextProvider";
+import LoginComponent from "./Components/LoginComponent";
+import AppAuthHandler from "./AppAuthHandler";
+import AppHeaderComponent from "./Components/AppHeaderComponent";
+import UserInfoContainer from "./UserInfoContainer";
+import AppFooterComponent from "./Components/AppFooterComponent";
+import CurrentSeedsContainer from "./InputSection/CurrentSeedsContainer";
+import SeedSelectionContainer from "./InputSection/SeedSelectionContainer";
+import IconComponent from "../Components/IconComponent";
+import OutputSectionContainer from "./OutputSection/OutputSectionContainer";
 
 export const HOME_ROUTE = "/";
 export const AUTH_ROUTE = "/auth";
@@ -88,12 +96,43 @@ function App() {
             path={HOME_ROUTE}
             element={
               <AppStateContextProvider>
-                <MainContainer
-                  doLogout={logout}
-                  loginError={loginError}
-                  doLogin={doLogin}
-                  isLoggedIn={isLoggedIn}
-                />
+                <AppLayoutContainer isLoggedIn={isLoggedIn}>
+                  {{
+                    appHeader: (
+                      <AppHeaderComponent>
+                        {{
+                          userInfo: isLoggedIn ? (
+                            <UserInfoContainer logout={logout} />
+                          ) : null,
+                        }}
+                      </AppHeaderComponent>
+                    ),
+                    appFooter: <AppFooterComponent logout={logout} />,
+                    loginView: (
+                      <LoginComponent
+                        loginError={loginError}
+                        doLogin={doLogin}
+                      />
+                    ),
+                    sections: [
+                      {
+                        type: "input" as AppSectionType,
+                        toggle: <CurrentSeedsContainer />,
+                        content: <SeedSelectionContainer />,
+                      },
+                      {
+                        type: "output" as AppSectionType,
+                        toggle: (
+                          <>
+                            <span>Output</span>
+                            <IconComponent type="right" />
+                          </>
+                        ),
+                        content: <OutputSectionContainer />,
+                      },
+                    ],
+                  }}
+                </AppLayoutContainer>
               </AppStateContextProvider>
             }
           />
